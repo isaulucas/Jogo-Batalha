@@ -1,0 +1,23 @@
+Como funciona o jogo?
+
+*Material Necessário:*
+
+- Utiliza-se um jogo completo de baralho (52 cartas) se for jogado por 2 a 4 pessoas;
+- Se for jogado por mais de 4 pessoas, aconselha-se o uso de mais um jogo copleto de cartas.
+No nosso caso, implementamos um jogo onde apenas 2 pessoas jogam.
+
+*Como jogar:*
+
+1) Distribuem-se igualmente as cartas entre os jogadores. Isso será implementado na forma de 2 listas;
+2) Cada jogador poderá visualizar as cartas da sua lista e escolherá uma carta para lançar em cada rodada;
+3) A cada rodada, vence o jogador com a carta de valor mais alto. O jogador vencedor da rodada, manterá a sua carta e ganhará a carta do seu oponente. Ambas as cartas serão acrescentadas no fim da lista;
+4) Se as cartas tiverem o mesmo valor, os jogadores devem escolher novamente uma carta para lançar. O ganhador da rodada manterá as suas cartas e as do seu opontente. Ambas as cartas serão acrescentadas no fim da lista;
+5) Se novamente as cartas tiverem o mesmo valor, os jogadores devem escolher 3 cartas para lançar. Irá ganhar quem possuir dentre as 10 cartas a carta de maior valor. O jogador vencedor irá adicionar as 10 cartas ao final da sua lista;
+6) No fim, ganha quem tiver recolhido o maior número de cartas, ou seja, quem possuir a lista de tamanho maior;
+7) Caso ambos terminem com o mesmo número de cartas, deverão ser somados os números das cartas e ver qual o resultado obtido por cada um dos jogadores. Ganha quem possuir o valor mais alto.
+
+*Valor das cartas:*
+- O ranking das cartas da maior para menor é A K Q J T 9 8 7 6 5 4 3 2;
+- Nenhuma carta derrota um Ás e o 2 não vence nenhuma outra (a menos que esteja jogando com regras especiais).
+
+Obs.: O jogo se baseia no Batalha original, porém foram adicionadas novas regras.
