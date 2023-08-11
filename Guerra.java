@@ -18,6 +18,32 @@ public class Guerra {
 
         System.out.println("Bem-vindo ao Jogo da Guerra de Cartas!");
 
+        inicializarJogo();
+
+        int turno = 1;
+        while (!jogoTerminou()) {
+            System.out.println("Turno " + turno);
+            mostrarPlacar();
+
+            // Processar jogadas dos jogadores
+            processarJogadas(scanner);
+
+            // Comparar cartas jogadas e atualizar placar
+            atualizarPlacar(scanner);
+
+            System.out.println("Pressione Enter para continuar...");
+            scanner.nextLine();
+
+            turno++;
+        }
+
+        // Determinar e mostrar o vencedor
+        int vencedor = determinarVencedor();
+        System.out.println("Jogador " + (vencedor + 1) + " venceu o jogo!");
+    }
+
+    // Inicializa o jogo
+    private static void inicializarJogo() {
         baralho = criarBaralho();
         Collections.shuffle(baralho);
 
@@ -31,50 +57,43 @@ public class Guerra {
         }
 
         placar = new int[NUM_JOGADORES];
-
-        int turno = 1;
-        while (!jogoTerminou()) {
-            System.out.println("Turno " + turno);
-            mostrarPlacar();
-
-            for (int i = 0; i < NUM_JOGADORES; i++) {
-                System.out.println("\nJogador " + (i + 1) + ", é a sua vez! Suas cartas:");
-                mostrarCartas(maosJogadores[i]);
-                System.out.print("Escolha o número da carta a jogar: ");
-                int escolha = scanner.nextInt();
-                maosJogadores[i].get(escolha - 1);
-                scanner.nextLine();
-            }
-
-            Carta cartaJogador1 = maosJogadores[0].remove(0);
-            Carta cartaJogador2 = maosJogadores[1].remove(0);
-
-            System.out.println("Jogador 1: " + cartaJogador1);
-            System.out.println("Jogador 2: " + cartaJogador2);
-
-            int resultado = cartaJogador1.compareTo(cartaJogador2);
-
-            if (resultado > 0) {
-                placar[0]++;
-                System.out.println("Jogador 1 venceu a rodada!");
-            } else if (resultado < 0) {
-                placar[1]++;
-                System.out.println("Jogador 2 venceu a rodada!");
-            } else {
-                System.out.println("Empate! Vai ter uma Guerra!");
-                // Implemente a lógica da Guerra aqui
-            }
-
-            System.out.println("Pressione Enter para continuar...");
-            scanner.nextLine();
-
-            turno++;
-        }
-
-        int vencedor = determinarVencedor();
-        System.out.println("Jogador " + (vencedor + 1) + " venceu o jogo!");
     }
 
+    // Processa as jogadas dos jogadores
+    private static void processarJogadas(Scanner scanner) {
+        for (int i = 0; i < NUM_JOGADORES; i++) {
+            System.out.println("\nJogador " + (i + 1) + ", é a sua vez! Suas cartas:");
+            mostrarCartas(maosJogadores[i]);
+            System.out.print("Escolha o número da carta a jogar: ");
+            int escolha = scanner.nextInt();
+            maosJogadores[i].get(escolha - 1);
+            scanner.nextLine();
+        }
+    }
+
+    // Atualiza o placar após comparar as cartas jogadas
+    private static void atualizarPlacar(Scanner scanner) {
+        Carta cartaJogador1 = maosJogadores[0].remove(0);
+        Carta cartaJogador2 = maosJogadores[1].remove(0);
+
+        System.out.println("Jogador 1: " + cartaJogador1);
+        System.out.println("Jogador 2: " + cartaJogador2);
+
+        int resultado = cartaJogador1.compareTo(cartaJogador2);
+
+        if (resultado > 0) {
+            placar[0]++;
+            System.out.println("Jogador 1 venceu a rodada!");
+        } else if (resultado < 0) {
+            placar[1]++;
+            System.out.println("Jogador 2 venceu a rodada!");
+        } else {
+            System.out.println("Empate! Vai ter uma Guerra!");
+            // Implemente a lógica da Guerra aqui
+        }
+    }
+
+    // Verifica se o jogo terminou
     private static boolean jogoTerminou() {
         for (int pontos : placar) {
             if (pontos >= CARTAS_POR_JOGADOR) {
@@ -84,10 +103,12 @@ public class Guerra {
         return false;
     }
 
+    // Mostra o placar atual
     private static void mostrarPlacar() {
         System.out.println("Placar: Jogador 1 (" + placar[0] + ") - Jogador 2 (" + placar[1] + ")");
     }
 
+    // Determina o vencedor do jogo
     private static int determinarVencedor() {
         if (placar[0] > placar[1]) {
             return 0;
@@ -96,6 +117,7 @@ public class Guerra {
         }
     }
 
+    // Cria um novo baralho de cartas
     private static List<Carta> criarBaralho() {
         List<Carta> baralho = new ArrayList<>();
         for (Naipe naipe : Naipe.values()) {
@@ -106,6 +128,7 @@ public class Guerra {
         return baralho;
     }
     
+    // Mostra as cartas na mão do jogador
     private static void mostrarCartas(List<Carta> cartas) {
         for (int i = 0; i < cartas.size(); i++) {
             System.out.println((i + 1) + ". " + cartas.get(i));
